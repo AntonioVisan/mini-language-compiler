@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tema_2_LFC
+namespace MiniLanguageCompiler
 {
     internal class LexerErrorListener : IAntlrErrorListener<int>
     {

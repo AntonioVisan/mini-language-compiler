@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tema_2_LFC
+namespace MiniLanguageCompiler
 {
     internal class FunctionVisitor : MiniLanguageBaseVisitor<object>
     {

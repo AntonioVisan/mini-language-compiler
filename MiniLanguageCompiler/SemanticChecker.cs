@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tema_2_LFC
+namespace MiniLanguageCompiler
 {
     internal class SemanticChecker
     {

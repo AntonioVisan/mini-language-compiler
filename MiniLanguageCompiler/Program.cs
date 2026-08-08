@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
-namespace Tema_2_LFC
+namespace MiniLanguageCompiler
 {
     internal class Program
     {
