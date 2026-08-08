@@ -1,9 +1,6 @@
 ﻿using Antlr4.Runtime.Misc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniLanguageCompiler
 {
@@ -34,7 +31,7 @@ namespace MiniLanguageCompiler
             {
                 var expressionType = expressionTypeVisitor.Visit(context.expression());
                 if (expressionType != "bool")
-                    semanticChecker.errors.Add($"Eroare: Conditia din if trebuie sa fie boolean, la linia {context.Start.Line}");
+                    semanticChecker.errors.Add($"Error: The condition in if must be boolean at line {context.Start.Line}.");
             }
             Visit(context.statement(0));
             if (context.statement().Length > 1 && context.statement(1) != null)
@@ -63,7 +60,7 @@ namespace MiniLanguageCompiler
 
                     if (forVariables.Any(variable => variable.name == variableName))
                         semanticChecker.errors.Add(
-                            $"Eroare: Variabila {variableName} este deja declarata in structura for, la linia {context.Start.Line}."
+                            $"Error: Variable {variableName} is already declared in the for statement at line {context.Start.Line}."
                         );
                     else
                     {
@@ -81,7 +78,7 @@ namespace MiniLanguageCompiler
 
                             if (!semanticChecker.IsTypeCompatible(variableType, expressionType))
                                 semanticChecker.errors.Add(
-                                    $"Eroare: Nu se poate initializa variabila {variableName} de tip {variableType} cu o valoare de tip {expressionType}, la linia {context.Start.Line}."
+                                    $"Error: Variable {variableName} of type {variableType} cannot be initialized with a value of type {expressionType} at line {context.Start.Line}."
                                 );
                         }
 
@@ -98,13 +95,13 @@ namespace MiniLanguageCompiler
             {
                 var conditionType = forExpressionVisitor.Visit(context.expression(0));
                 if (conditionType != "bool")
-                    semanticChecker.errors.Add($"Eroare: Conditia din for trebuie sa fie boolean, la linia {context.Start.Line}.");
+                    semanticChecker.errors.Add($"Error: The condition in for must be boolean at line {context.Start.Line}.");
             }
             if (context.expression(1) != null)
                 forExpressionVisitor.Visit(context.expression(1));
 
-            var InnerVisitor = new StatementVisitor(semanticChecker, currentFunctionName, forVariables, forExpressionVisitor);
-            InnerVisitor.Visit(context.statement());
+            var innerVisitor = new StatementVisitor(semanticChecker, currentFunctionName, forVariables, forExpressionVisitor);
+            innerVisitor.Visit(context.statement());
             return null;
         }
 
@@ -115,7 +112,7 @@ namespace MiniLanguageCompiler
             {
                 var expressionType = expressionTypeVisitor.Visit(context.expression());
                 if (expressionType != "bool")
-                    semanticChecker.errors.Add($"Eroare: Conditia din while trebuie sa fie boolean, la linia {context.Start.Line}");
+                    semanticChecker.errors.Add($"Error: The condition in while must be boolean at line {context.Start.Line}.");
             }
             Visit(context.statement());
             return null;
