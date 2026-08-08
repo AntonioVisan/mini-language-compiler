@@ -55,13 +55,16 @@ namespace MiniLanguageCompiler
             if (context.forInitialization() != null)
             {
                 var initialization = context.forInitialization();
+
                 if (initialization.type() != null)
                 {
                     var variableName = initialization.ID().GetText();
                     var variableType = initialization.type().GetText();
 
                     if (forVariables.Any(variable => variable.name == variableName))
-                        semanticChecker.errors.Add($"Eroare: Variabila {variableName} este deja declarata in structura for, la linia {context.Start.Line}.");
+                        semanticChecker.errors.Add(
+                            $"Eroare: Variabila {variableName} este deja declarata in structura for, la linia {context.Start.Line}."
+                        );
                     else
                     {
                         var variable = new Variable
@@ -71,17 +74,24 @@ namespace MiniLanguageCompiler
                             IsConst = false,
                             IsParameter = false
                         };
+
                         if (initialization.expression() != null)
                         {
                             var expressionType = forExpressionVisitor.Visit(initialization.expression());
+
                             if (!semanticChecker.IsTypeCompatible(variableType, expressionType))
-                                semanticChecker.errors.Add($"Eroare: Nu se poate initializa variabila {variableName} de tip {variableType} cu o valoare de tip {expressionType}, la linia {context.Start.Line}.");
+                                semanticChecker.errors.Add(
+                                    $"Eroare: Nu se poate initializa variabila {variableName} de tip {variableType} cu o valoare de tip {expressionType}, la linia {context.Start.Line}."
+                                );
                         }
+
                         forVariables.Add(variable);
                     }
                 }
-                else forExpressionVisitor.Visit(initialization.expression());
-
+                else
+                {
+                    forExpressionVisitor.Visit(initialization.assignment());
+                }
             }
 
             if (context.expression(0) != null)

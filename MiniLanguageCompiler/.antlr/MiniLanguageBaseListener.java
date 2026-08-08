@@ -1,4 +1,4 @@
-// Generated from f:/fisiere/C#/Tema 2 LFC/Tema 2 LFC/Tema 2 LFC/MiniLanguage.g4 by ANTLR 4.13.1
+// Generated from d:/SmartGit/mini-language-compiler/MiniLanguageCompiler/MiniLanguage.g4 by ANTLR 4.13.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -299,6 +299,18 @@ public class MiniLanguageBaseListener implements MiniLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIfStatement(MiniLanguageParser.IfStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForInitialization(MiniLanguageParser.ForInitializationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForInitialization(MiniLanguageParser.ForInitializationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

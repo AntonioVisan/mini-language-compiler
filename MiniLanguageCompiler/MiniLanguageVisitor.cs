@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from f:/fisiere/C#/Tema 2 LFC/Tema 2 LFC - Copie/Tema 2 LFC/MiniLanguage.g4 by ANTLR 4.13.1
+// Generated from d:/SmartGit/mini-language-compiler/MiniLanguageCompiler/MiniLanguage.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162

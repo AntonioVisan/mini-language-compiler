@@ -1,22 +1,16 @@
 ﻿using Antlr4.Runtime.Misc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniLanguageCompiler
 {
     internal class FunctionVisitor : MiniLanguageBaseVisitor<object>
     {
-        private SemanticChecker semanticChecker;
+        private readonly SemanticChecker semanticChecker;
         public string name { get; set; }
         public string returnType { get; set; }
         public List<Parameter> parameters { get; set; } = new List<Parameter>();
         public List<Variable> localVariables { get; set; } = new List<Variable>();
-
-        private HashSet<Variable> constVariables = new HashSet<Variable>();
         public FunctionVisitor(SemanticChecker semanticChecker)
         {
             this.semanticChecker = semanticChecker;
@@ -129,8 +123,6 @@ namespace MiniLanguageCompiler
                     return;
                 }
             }
-            if (localVariable.IsConst)
-                constVariables.Add(localVariable);
         }
     }
 }

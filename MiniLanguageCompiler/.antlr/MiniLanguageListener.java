@@ -1,4 +1,4 @@
-// Generated from f:/fisiere/C#/Tema 2 LFC/Tema 2 LFC/Tema 2 LFC/MiniLanguage.g4 by ANTLR 4.13.1
+// Generated from d:/SmartGit/mini-language-compiler/MiniLanguageCompiler/MiniLanguage.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -260,6 +260,16 @@ public interface MiniLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfStatement(MiniLanguageParser.IfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniLanguageParser#forInitialization}.
+	 * @param ctx the parse tree
+	 */
+	void enterForInitialization(MiniLanguageParser.ForInitializationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniLanguageParser#forInitialization}.
+	 * @param ctx the parse tree
+	 */
+	void exitForInitialization(MiniLanguageParser.ForInitializationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MiniLanguageParser#forStatement}.
 	 * @param ctx the parse tree

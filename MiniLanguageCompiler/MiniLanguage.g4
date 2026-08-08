@@ -52,7 +52,12 @@ functionCall:
 
 argumentList: expression (COMMA expression)*;
 
-literal: POSITIVE_LITERAL | FLOAT_LITERAL | STRING_LITERAL;
+literal:
+	POSITIVE_LITERAL
+	| FLOAT_LITERAL
+	| STRING_LITERAL
+	| TRUE
+	| FALSE;
 
 blockStatement: LEFT_BRACKET (statement)* RIGHT_BRACKET;
 
@@ -110,6 +115,9 @@ ELSE: 'else';
 FOR: 'for';
 WHILE: 'while';
 RETURN: 'return';
+
+TRUE: 'true';
+FALSE: 'false';
 
 ID: (LETTER | UNDERLINE) (LETTER | DIGIT | UNDERLINE)*;
 STRING_LITERAL: '"' (~["\r\n])* '"';
