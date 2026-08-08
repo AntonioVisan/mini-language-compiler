@@ -93,12 +93,17 @@ namespace MiniLanguageCompiler
 
             if (localVariables.Any(variable => variable.name == localVariable.name))
             {
-                semanticChecker.errors.Add($"Eroare semantica: Variabila locala {localVariable.name} este deja declarata la linia {context.Start.Line}.");
+                semanticChecker.errors.Add(
+                     $"Semantic error: Local variable {localVariable.name} is already declared at line {context.Start.Line}."
+                );
                 return;
             }
+
             if (parameters.Any(parameter => parameter.name == localVariable.name))
             {
-                semanticChecker.errors.Add($"Eroare semantica: Variabila locala {localVariable.name} coincide cu parametrul din functia {name}, la linia {context.Start.Line}.");
+                semanticChecker.errors.Add(
+                    $"Semantic error: Local variable {localVariable.name} conflicts with the parameter of function {name} at line {context.Start.Line}."
+                );
                 return;
             }
 
@@ -106,7 +111,9 @@ namespace MiniLanguageCompiler
 
             if (localVariable.IsConst && context.expression() == null)
             {
-                semanticChecker.errors.Add($"Eroare semantica: Variabila const {localVariable.name} trebuie initializata la declarare, la linia {context.Start.Line}.");
+                semanticChecker.errors.Add(
+                    $"Semantic error: Const variable {localVariable.name} must be initialized at declaration at line {context.Start.Line}."
+                );
                 return;
             }
             if (context.expression() != null)
@@ -119,7 +126,9 @@ namespace MiniLanguageCompiler
                 localVariable.value = context.expression().GetText();
                 if (expressionType != null && !IsTypeCompatible(localVariable.type, expressionType))
                 {
-                    semanticChecker.errors.Add($"Eroare semantica: Nu se poate initializa variabila {localVariable.name} de tip {localVariable.type} cu o valoare de tip {expressionType}, la linia {context.Start.Line}.");
+                    semanticChecker.errors.Add(
+                        $"Semantic error: Cannot initialize variable {localVariable.name} of type {localVariable.type} with a value of type {expressionType} at line {context.Start.Line}."
+                    );
                     return;
                 }
             }
