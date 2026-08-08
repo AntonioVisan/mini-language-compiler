@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniLanguageCompiler
 {
@@ -42,14 +38,14 @@ namespace MiniLanguageCompiler
                 if (functionsSignatures.TryGetValue(nameFunction, out var existingParameters))
                 {
                     if (existingParameters.SequenceEqual(parametersTypes))
-                        errors.Add($"Eroare: Functia {nameFunction} cu aceleasi tipuri de parametri exista deja.");
+                        errors.Add($"Error: Function {nameFunction} with the same parameter types already exists.");
                 }
                 else functionsSignatures[nameFunction] = parametersTypes;
             }
             if (mainFunctionCount == 0)
-                errors.Add("Eroare: Nu exista functia main.");
+                errors.Add("Error: The main function does not exist.");
             else if (mainFunctionCount > 1)
-                errors.Add("Eroare: Exista mai multe functii main.");
+                errors.Add("Error: Multiple main functions exist.");
         }
         public void CheckFunctionCalls(List<FunctionCallInfo> functionsCalls, List<FunctionVisitor> functions)
         {
@@ -63,21 +59,21 @@ namespace MiniLanguageCompiler
             {
                 if (!functionsSignatures.ContainsKey(call.name))
                 {
-                    errors.Add($"Eroare: Functia {call.name} apelata la linia {call.line} nu este definita.");
+                    errors.Add($"Error: Function {call.name} called at line {call.line} is not defined.");
                     continue;
                 }
 
                 var parametersTypes = functionsSignatures[call.name];
                 if (parametersTypes.Count != call.arguments.Count)
                 {
-                    errors.Add($"Eroare: Functia {call.name} apelata la linia {call.line} are {call.arguments.Count} parametri, dar se asteapta {parametersTypes.Count}.");
+                    errors.Add($"Error: Function {call.name} called at line {call.line} has {call.arguments.Count} arguments, but {parametersTypes.Count} are expected.");
                     continue;
                 }
 
                 for (int i = 0; i < parametersTypes.Count; i++)
                 {
                     if (!IsTypeCompatible(parametersTypes[i], call.arguments[i]))
-                        errors.Add($"Eroare: Argumentul {i + 1} al functiei {call.name} la linia {call.line} are tip {call.arguments[i]}, dar se asteapta {parametersTypes[i]}.");
+                        errors.Add($"Error: Argument {i + 1} of function {call.name} at line {call.line} has type {call.arguments[i]}, but type {parametersTypes[i]} is expected.");
                 }
             }
         }
@@ -86,7 +82,7 @@ namespace MiniLanguageCompiler
             foreach (var call in functionCalls)
             {
                 if (call.name == "main")
-                    errors.Add($"Eroare: Functia main nu poate fi apelata la linia {call.line}");
+                    errors.Add($"Error: The main function cannot be called at line {call.line}.");
             }
         }
 
@@ -97,7 +93,7 @@ namespace MiniLanguageCompiler
                 var nameVariables = new HashSet<string>();
                 foreach (var localVariable in function.localVariables)
                     if (!nameVariables.Add(localVariable.name))
-                        errors.Add($"Eroare: Variabila locala {localVariable.name} este declarata de mai multe ori in functia {function.name}.");
+                        errors.Add($"Error: Local variable {localVariable.name} is declared multiple times in function {function.name}.");
             }
         }
 
@@ -109,7 +105,7 @@ namespace MiniLanguageCompiler
                 foreach (var localVariable in function.localVariables)
                 {
                     if (!localVariable.IsParameter && parameterNames.Contains(localVariable.name))
-                        errors.Add($"Eroare: Variabila locala {localVariable.name} coincide cu parametrul din functia {function.name}.");
+                        errors.Add($"Error: Local variable {localVariable.name} conflicts with a parameter in function {function.name}.");
                 }
             }
         }
@@ -122,14 +118,15 @@ namespace MiniLanguageCompiler
                 if (!functionReturnTypes.TryGetValue(function.name, out var returnTypes))
                 {
                     if (function.returnType != "void")
-                        errors.Add($"Eroare: Functia {function.name} trebuie sa returneze {function.returnType}, dar nu are niciun return.");
+                        errors.Add($"Error: Function {function.name} must return {function.returnType}, but it has no return statement.");
                     continue;
                 }
                 foreach (var currentReturnType in returnTypes)
                 {
                     if (currentReturnType == "error") continue;
+
                     if (currentReturnType != function.returnType)
-                        errors.Add($"Eroare: Functia {function.name} trebuie sa returneze {function.returnType}, dar pe una din ramuri returneaza {currentReturnType}.");
+                        errors.Add($"Error: Function {function.name} must return {function.returnType}, but one of its branches returns {currentReturnType}.");
                 }
             }
         }
